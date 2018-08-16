@@ -17,7 +17,7 @@ class MySql::Connection < DB::Connection
         if splitted_path.size > 0
           initial_catalog = splitted_path.last
         else
-          initial_catalog = nil
+          initial_catalog = path
         end
       else
         initial_catalog = nil
