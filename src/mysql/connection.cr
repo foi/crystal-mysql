@@ -3,7 +3,7 @@ require "socket"
 class MySql::Connection < DB::Connection
   def initialize(context : DB::ConnectionContext)
     super(context)
-    @socket = uninitialized TCPSocket
+    @socket = uninitialized TCPSocket | UNIXSocket
 
     begin
       host = context.uri.host.not_nil!
@@ -18,7 +18,11 @@ class MySql::Connection < DB::Connection
         initial_catalog = nil
       end
 
-      @socket = TCPSocket.new(host, port)
+      @socket = if (host.starts_with?("./") || host.starts_with?("/")) && host.ends_with?(".sock")
+                  UNIXSocket.new(host)
+                else
+                  TCPSocket.new(host, port)
+                end
       handshake = read_packet(Protocol::HandshakeV10)
 
       write_packet(1) do |packet|
