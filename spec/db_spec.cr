@@ -18,7 +18,7 @@ DB::DriverSpecs(MySql::Any).run do
     end
   end
 
-  connection_string db_url("crystal_mysql_test")
+  connection_string db_url("mysql://root@/run/mysqld/mysqld.sock/crystal_mysql_test")
 
   sample_value true, "bool", "true", type_safe_value: false
   sample_value false, "bool", "false", type_safe_value: false

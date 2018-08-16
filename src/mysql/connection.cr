@@ -13,7 +13,12 @@ class MySql::Connection < DB::Connection
 
       path = context.uri.path
       if path && path.size > 1
-        initial_catalog = path[1..-1]
+        splitted_path = path.split("/")
+        if splitted_path.size > 0
+          initial_catalog = splitted_path.last
+        else
+          initial_catalog = nil
+        end
       else
         initial_catalog = nil
       end
