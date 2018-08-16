@@ -18,7 +18,7 @@ class MySql::Connection < DB::Connection
         initial_catalog = nil
       end
 
-      @socket = if (host.starts_with?("./") || host.starts_with?("/")) && host.ends_with?(".sock")
+      @socket = if path
                   UNIXSocket.new(host)
                 else
                   TCPSocket.new(host, port)
