@@ -14,6 +14,7 @@ class MySql::Connection < DB::Connection
       path = context.uri.path
       if path && path.size > 1
         splitted_path = path.split("/")
+        puts "!!!!!!!!! #{splitted_path}"
         if splitted_path.size > 0
           initial_catalog = splitted_path.last
         else
@@ -22,6 +23,8 @@ class MySql::Connection < DB::Connection
       else
         initial_catalog = nil
       end
+
+      puts initial_catalog
 
       @socket = if path
                   UNIXSocket.new(host)
